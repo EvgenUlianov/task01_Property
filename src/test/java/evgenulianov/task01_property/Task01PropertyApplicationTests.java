@@ -43,11 +43,11 @@ class Task01PropertyApplicationTests {
     @BeforeAll
     static public void setUp() {
 
-        prodapp = new GenericContainer<>("prodapp:latest")
-                .withExposedPorts(8080)
-                .withEnv("NETOLOGY_PROFILE_DEV","FALSE");
+//        prodapp = new GenericContainer<>("prodapp:latest")
+//                .withExposedPorts(9090)
+//                .withEnv("NETOLOGY_PROFILE_DEV","FALSE");
         devapp = new GenericContainer<>("devapp:latest")
-                .withExposedPorts(8081)
+                .withExposedPorts(9090)
 //            .withEnv("TESTCONTAINERS_RYUK_DISABLED","TRUE")
                 .withEnv("NETOLOGY_PROFILE_DEV","TRUE");
 
@@ -60,34 +60,34 @@ class Task01PropertyApplicationTests {
 //        devapp.getDockerClient()
 //                .authConfig().withUsername("").withPassword("");
 
-        prodapp.start();
+//        prodapp.start();
         devapp.start();
     }
 
-    @Test
-    void contextLoadsProd() {
-
-//        System.out.print("prodapp.getMappedPort(8080):" );
-//        System.out.println(prodapp.getMappedPort(8080) );
-
-        int mappedPort = prodapp.getMappedPort(8080);
-
-
-        Assertions.assertTrue(true);
-
-        ResponseEntity<String> forEntityProd = restTemplate.getForEntity("http://localhost:" + String.valueOf(mappedPort) + "/profile", String.class);
-//        System.out.println(forEntityProd.getBody());
-        SystemProfile profile = new DevProfile();
-        String expectedBody = profile.getProfile();
-        Assertions.assertEquals(expectedBody, forEntityProd.getBody());
-    }
+//    @Test
+//    void contextLoadsProd() {
+//
+////        System.out.print("prodapp.getMappedPort(8080):" );
+////        System.out.println(prodapp.getMappedPort(8080) );
+//
+//        int mappedPort = prodapp.getMappedPort(9090);
+//
+//
+//        Assertions.assertTrue(true);
+//
+//        ResponseEntity<String> forEntityProd = restTemplate.getForEntity("http://localhost:" + String.valueOf(mappedPort) + "/profile", String.class);
+////        System.out.println(forEntityProd.getBody());
+//        SystemProfile profile = new DevProfile();
+//        String expectedBody = profile.getProfile();
+//        Assertions.assertEquals(expectedBody, forEntityProd.getBody());
+//    }
 
     @Test
     void contextLoadsDev() {
 
-//        System.out.print("devapp.getMappedPort(9090):" );
-//        System.out.println(devapp.getMappedPort(9090) );
-        int mappedPort = devapp.getMappedPort(8081);
+       System.out.print("devapp.getMappedPort(9090):" );
+       System.out.println(devapp.getMappedPort(9090) );
+        int mappedPort = devapp.getMappedPort(9090);
 
         ResponseEntity<String> forEntityDev = restTemplate.getForEntity("http://localhost:" + String.valueOf(mappedPort) + "/profile", String.class);
         SystemProfile profile = new ProductionProfile();
